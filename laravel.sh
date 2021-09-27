@@ -1,6 +1,6 @@
 #run at laravel directory
-project='something.com'                                #your project name
-clone_dir="/var/www/$project"                              #where to clone
+project='something.com'       #your project name
+clone_dir="/var/www/$project" #where to clone
 permission_755=755
 permission_756=756
 permission_775=775
