@@ -2,4 +2,6 @@
 .vscode
 *.zip
 *.log
+*.file
 *.iml
+
