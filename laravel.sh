@@ -9,7 +9,7 @@ permission_777=777
 
 #composer install
 #cp .env.example .env
-read -p "Have you edited the , yes/no: " decision
+read -p "Have you edited the nginx, php, mysql previously, yes/no: " decision
 if [ $decision = 'yes' ]; then
 
   echo \
