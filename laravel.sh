@@ -1,30 +1,37 @@
 #run at laravel directory
-project='gadgetandgear.com'                                #your project name
+project='something.com'                                #your project name
 clone_dir="/var/www/$project"                              #where to clone
-clone_url='git@github.com:arif98741/barcode_generator.git' #replace this with specific project ssh-url
 permission_755=755
 permission_756=756
 permission_775=775
 permission_777=777
 
-#composer install
-#cp .env.example .env
+composer install
+cp .env.example .env
 read -p "Have you edited the nginx, php, mysql previously, yes/no: " decision
 if [ $decision = 'yes' ]; then
 
-  echo \
+  echo 'Edit .env file'
+  php artisan key:generate
+  nano .env
+  read -p "Have you edited .env file, yes/no: " decision
+  if [ $decision = 'yes' ]; then
+    php artisan migrate:fresh --seed
+  fi
 
-  echo 'Success installed\n'
-  nginx -v
+  echo
+
+  read -p "Do you want to run migrate with seed, yes/no: " decision
+  if [ $decision = 'yes' ]; then
+    php artisan migrate:fresh --seed
+  fi
 
   echo 'running script'
-
-  php artisan key:generate
   php artisan config:cache
   php artisan optimize:clear
   php artisan view:cache
 
-  echo \
+  echo
 
   echo 'Artisan command executed'
 
@@ -42,19 +49,19 @@ if [ $decision = 'yes' ]; then
   #chown -R www-data.www-data $clone_dir/public/images/media
 
   group_read_permission=(#folders that needs read(R) permission
-
     storage
     public/themes
     public/vendor
     public/storage
+
   )
 
   for i in "${group_read_permission[@]}"; do
     chown -R www-data.www-data $clone_dir/$i
   done
 
-  echo 'Success';
-  echo \
+  echo 'Success'
+  echo
 
   echo 'Thanks for using laravel bash script script'
 

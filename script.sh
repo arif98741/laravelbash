@@ -22,9 +22,9 @@ function run_script() {
 
     #variables for using in bash script
     #this is sensitive information. Please keep your head cool before changing this variables
-    project='gadgetandgear.com'                       #your project name. you should change it according to your domain name
+    project='something.com'                       #your project name. you should change it according to your domain name
     clone_dir="/var/www/$project"                     #where to clone . no need to change
-    clone_url='git@github.com:arif98741/wowgadet.git' #your git repository url example: git@url.com:user/repo.git
+    clone_url='git@github.com:arif98741/something.git' #your git repository url example: git@url.com:user/repo.git
     permission_755=755
     permission_756=756
     permission_775=775
