@@ -81,7 +81,7 @@ function run_script() {
       fi
 
       echo "=========================================================="
-      echo "Step2: Nginx Installation"
+      echo "Step3: Nginx Installation"
       echo "============================================================"
       echo "Installing Nginx"
 
@@ -142,7 +142,7 @@ function run_script() {
       echo
 
       echo "=========================================================="
-      echo "Step3: Manage Nginx Server Block"
+      echo "Step4: Manage Nginx Server Block"
       echo "============================================================"
       echo
 
