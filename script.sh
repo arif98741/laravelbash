@@ -173,7 +173,7 @@ function run_script() {
       echo
 
       # shellcheck disable=SC2162
-      read -p "Do you want to manage nginx server block " decision
+      read -p "Do you want to manage nginx server block, yes/no " decision
       if [ "$decision" = 'yes' ]; then
         echo \
           echo 'Creating server block'
