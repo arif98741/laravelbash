@@ -217,12 +217,12 @@ function run_script() {
 function php_installation() { #accepts one param version. don't change here. Change from php_version at the top of this script
   sudo apt install software-properties-common apt-transport-https -y
   sudo add-apt-repository ppa:ondrej/php -y
-  apt-get install php."$1" -y
+  apt-get install php"$1" -y
   # shellcheck disable=SC2086
-  apt-get install php.$1-fpm php.$1-cli php.$1-mysql php.$1-curl php.$1-json php.$1-mbstring php.$1-zip -y
-  systemctl start php."$1"-fpm
+  apt-get install php$1-fpm php$1-cli php$1-mysql php$1-curl php$1-json php$1-mbstring php$1-zip -y
+  systemctl start php"$1"-fpm
   # shellcheck disable=SC2086
-  systemctl enable php.$1-fpm
+  systemctl enable php$1-fpm
 }
 
 # install composer
