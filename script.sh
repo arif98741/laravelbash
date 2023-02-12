@@ -1,5 +1,5 @@
 #!/bin/bash
-#Version: 0.0.5
+#Version: 0.0.6
 #Script: Shell Script for Server Setup for Nginx
 #Description: This is for configuring nginx, php and permission management.
 # Some commands may not be executed successfully due to permission issue.
@@ -16,7 +16,7 @@ function run_script() {
     echo "=========================================================="
     echo "Welcome to Shell for Server Setup Nginx"
     echo "Created By: Ariful Islam"
-    echo "----Version: 0.0.5---"
+    echo "----Version: 0.0.6---"
     echo "--https://github.com/arif98741----"
     echo "============================================================"
 
@@ -132,10 +132,10 @@ function run_script() {
         echo
 
         echo "Allowing Ufw Permissions"
-        echo \
+        echo
 
         ufw allow 'Nginx HTTP'
-        echo \
+        echo
 
         echo "Nginx HTTP Allowed Successfully. Listed Below"
         ufw status
@@ -144,7 +144,7 @@ function run_script() {
         echo "==================================Showing Server Status================================"
         #systemctl status nginx
 
-        echo \
+        echo
 
         echo "Booting.."
         systemctl restart nginx
@@ -190,9 +190,19 @@ function run_script() {
         read -p "Do you want to copy pre-built default file? yes/no: " copydecision
         if [ "$copydecision" = 'yes' ]; then #this will handle whether new file will be created or not
           #nano /var/www/etc
-          cp /etc/nginx/sites-available/default /etc/nginx/sites-available/$project
-          echo "New server block added $project"
-          nano /etc/nginx/sites-available/$project
+          cp /etc/nginx/sites-available/default /etc/nginx/sites-available/$project.".conf"
+          echo "New server block added as virtualhost for project:  $project"
+          echo
+
+          nano /etc/nginx/sites-available/$project.".conf"
+          echo "Activating domain: "
+          echo
+
+          # shellcheck disable=SC2226
+          ln -s /etc/nginx/sites-available/$project.".conf" /etc/nginx/sites-enabled/
+          echo "Activated domain: $project"
+          echo \
+
         else
           echo "You are editing the default nginx config"
           nano /etc/nginx/sites-available/default
@@ -245,6 +255,7 @@ function composer_installation() { #accepts one param version. don't change here
   echo "Successfully installed composer!. "
 
   echo
+
   composer --version
 
 }
