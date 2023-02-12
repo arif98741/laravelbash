@@ -1,5 +1,5 @@
 #!/bin/bash
-#Version: 0.0.6
+#Version: 0.0.1
 #Script: Shell Script for Server Setup for Nginx
 #Description: This is for configuring nginx, php and permission management.
 # Some commands may not be executed successfully due to permission issue.
@@ -16,7 +16,7 @@ function run_script() {
     echo "=========================================================="
     echo "Welcome to Shell for Server Setup Nginx"
     echo "Created By: Ariful Islam"
-    echo "----Version: 0.0.6---"
+    echo "----Version: 0.0.2---"
     echo "--https://github.com/arif98741----"
     echo "============================================================"
 
@@ -81,13 +81,76 @@ function run_script() {
       # shellcheck disable=SC2162
       read -p "Do you want to install php, yes/no: " decision
       if [ "$decision" = 'yes' ]; then
-        echo "Installing PHP $php_version"
+
+        echo "Enter your desired PHP version : "
+        #EOF
+        echo
+
+        echo "1: PHP 8.2
+        2: PHP 8.1
+        3: PHP 8.0
+        4: PHP 7.4
+        5: PHP 7.3
+        6: PHP 7.2
+        "
+        #EOF
+
+        # shellcheck disable=SC2162
+        read -p "select 1 to 6: " selector
+
+        #echo "You have selected "$selector
+
+        #EOF
+
+        case $selector in
+
+        1)
+          # shellcheck disable=SC2162
+          read -p " " phpversion
+          echo -n "You have selected PHP 8.2"
+          ;;
+        2)
+          # shellcheck disable=SC2162
+          read -p " " phpversion
+          echo -n "You have selected PHP 8.1"
+          ;;
+        3)
+          # shellcheck disable=SC2162
+          read -p " " phpversion
+          echo -n "You have selected PHP 8.0"
+          ;;
+        4)
+          # shellcheck disable=SC2162
+          read -p " " phpversion
+          echo -n "You have selected PHP 7.4"
+          ;;
+        5)
+          # shellcheck disable=SC2162
+          read -p " " phpversion
+          echo -n "You have selected PHP 7.3"
+          ;;
+
+        6)
+          # shellcheck disable=SC2162
+          read -p " " phpversion
+          echo -n "You have selected PHP 7.2"
+          ;;
+
+        *)
+          phpversion=$php_version
+          echo -n "You have not selected any PHP versions. Now installing default PHP version declared at the top of script ".$phpversion
+          ;;
+        esac
+
+        echo
+
+        echo "Installing php $phpversion"
         echo
 
         # shellcheck disable=SC2091
-        $(php_installation $php_version)
+        $(php_installation $phpversion)
 
-        echo "Successfully Installed PHP $php_version"
+        echo "Successfully Installed PHP $phpversion"
         echo
       fi
 
@@ -201,7 +264,7 @@ function run_script() {
           # shellcheck disable=SC2226
           ln -s /etc/nginx/sites-available/$project.".conf" /etc/nginx/sites-enabled/
           echo "Activated domain: $project"
-          echo \
+          echo
 
         else
           echo "You are editing the default nginx config"
