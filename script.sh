@@ -1,5 +1,5 @@
 #!/bin/bash
-#Version: 0.0.1
+#Version: 0.0.5
 #Script: Shell Script for Server Setup for Nginx
 #Description: This is for configuring nginx, php and permission management.
 # Some commands may not be executed successfully due to permission issue.
@@ -16,14 +16,14 @@ function run_script() {
     echo "=========================================================="
     echo "Welcome to Shell for Server Setup Nginx"
     echo "Created By: Ariful Islam"
-    echo "----Version: 0.0.2---"
+    echo "----Version: 0.0.5---"
     echo "--https://github.com/arif98741----"
     echo "============================================================"
 
     #variables for using in bash script
     #this is sensitive information. Please keep your head cool before changing this variables value
     project='something.com'                            #your project name. you should change it according based on domain name
-    clone_dir="/var/www/html/$project"                      #where to clone . no need to change
+    clone_dir="/var/www/html/$project"                 #where to clone . no need to change
     clone_url='git@github.com:arif98741/something.git' #your git repository url example: git@url.com:user/repo.git
     ssh_email='something@gmail.com'                    #this should be your github account email
     server='nginx'
@@ -109,44 +109,51 @@ function run_script() {
       echo "=========================================================="
       echo "Step4: Nginx Installation"
       echo "============================================================"
-      echo "Installing Nginx"
+      # shellcheck disable=SC2162
+      read -p "Do you want to install nginx, yes/no: " decision
+      if [ "$decision" = 'yes' ]; then
+        echo "Installing Nginx"
+        echo
+        echo
 
-      echo
+        sudo apt update
+        sudo apt install nginx
 
-      sudo apt update
-      sudo apt install nginx
+        echo
 
-      echo
+        echo "Nginx Successfully Installed"
+        echo
 
-      echo "Nginx Successfully Installed"
-      nginx -v
-      echo
+        nginx -v
+        echo
 
-      echo "Showing Ufw Permissions"
-      ufw app list
-      echo
+        echo "Showing Ufw Permissions"
+        ufw app list
+        echo
 
-      echo "Allowing Ufw Permissions"
+        echo "Allowing Ufw Permissions"
+        echo \
 
-      ufw allow 'Nginx HTTP'
-      echo
+        ufw allow 'Nginx HTTP'
+        echo \
 
-      echo "Nginx HTTP Allowed Successfully. Listed Below"
-      ufw status
-      echo
+        echo "Nginx HTTP Allowed Successfully. Listed Below"
+        ufw status
+        echo
 
-      echo "Server Status"
-      #systemctl status nginx
+        echo "==================================Showing Server Status================================"
+        #systemctl status nginx
 
-      echo
+        echo \
 
-      echo "Booting.."
-      systemctl restart nginx
-      echo
+        echo "Booting.."
+        systemctl restart nginx
+        echo
 
-      echo "Nginx Booted..."
+        echo "Nginx Booted..."
 
-      echo
+        echo
+      fi
 
       echo "Adding Permission directory"
       # shellcheck disable=SC2086
@@ -217,10 +224,10 @@ function run_script() {
 function php_installation() { #accepts one param version. don't change here. Change from php_version at the top of this script
   sudo apt install software-properties-common apt-transport-https -y
   sudo add-apt-repository ppa:ondrej/php -y
-  apt-get install php$1 -y
+  apt-get install php"$1" -y
   # shellcheck disable=SC2086
-  apt-get install php$1-fpm php$1-cli php$1-mysql php$1-curl php$1-imagick php$1-gd php$1-mbstring php$1-zip php$1-xml php$1-bcmath -y
-  systemctl start php$1-fpm
+  apt-get install php$1-fpm php$1-cli php$1-mysql php$1-curl php$1-json php$1-mbstring php$1-zip -y
+  systemctl start php"$1"-fpm
   # shellcheck disable=SC2086
   systemctl enable php$1-fpm
 }
